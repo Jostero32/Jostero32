@@ -12,7 +12,8 @@ Soy estudiante de cuarto semestre de Ingeniería en Software. Estoy apasionado p
 - **Python**
 - **C++ (para Arduino)**
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Jostero32&layout=compact)](https://github.com/anuraghazra/github-readme-stats) [![Ashutosh's github activity graph](https://github-readme-activity-graph.cyclic.app/graph?username=tu-nombre-de-usuario&theme=react-dark)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Jostero32&layout=compact)](https://github.com/anuraghazra/github-readme-stats) 
+[![Ashutosh's github activity graph](https://github-readme-activity-graph.cyclic.app/graph?username=tu-nombre-de-usuario&theme=react-dark)](https://github.com/ashutosh00710/github-readme-activity-graph)
 
 
 
