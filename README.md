@@ -12,6 +12,9 @@ Soy estudiante de cuarto semestre de Ingeniería en Software. Estoy apasionado p
 - **Python**
 - **C++ (para Arduino)**
 
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Jostero32&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
+
+
 ## 📚 Educación
 
 Actualmente, estoy cursando el cuarto semestre de Ingeniería en Software. Además, he completado cursos de Python y C++ para mejorar mis habilidades y conocimientos en estos lenguajes.
