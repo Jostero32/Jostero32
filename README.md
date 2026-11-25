@@ -191,16 +191,16 @@ También desarrollo firmware para ESP32 y Arduino, con las apps y backends que s
 <table>
 <tr>
 <td width="33%" valign="top">
-<a href="https://github.com/Jostero32/ESP32-Control"><img src="https://raw.githubusercontent.com/Jostero32/ESP32-Control/main/docs/img/portada.png" width="100%" alt="ESP32-Control" /></a>
-<b><a href="https://github.com/Jostero32/ESP32-Control">ESP32-Control</a></b><br/>
-<sub>Firmware para ESP32 con cuatro botones que envían peticiones HTTP(S) a una API configurable, con portal cautivo para el…</sub><br/>
-<img src="https://img.shields.io/badge/ESP32-1e293b?style=flat-square&logo=espressif&logoColor=E7352C" alt="ESP32" /> <img src="https://img.shields.io/badge/C%2B%2B-1e293b?style=flat-square&logo=cplusplus&logoColor=00599C" alt="C++" /> <img src="https://img.shields.io/badge/Arduino-1e293b?style=flat-square&logo=arduino&logoColor=00979D" alt="Arduino" />
-</td>
-<td width="33%" valign="top">
 <a href="https://github.com/Jostero32/Sistema-Riego-IoT"><img src="https://raw.githubusercontent.com/Jostero32/Sistema-Riego-IoT/main/docs/img/portada.png" width="100%" alt="Sistema de riego IoT" /></a>
 <b><a href="https://github.com/Jostero32/Sistema-Riego-IoT">Sistema de riego IoT</a></b><br/>
 <sub>Monitoreo de un sistema de riego.</sub><br/>
 <img src="https://img.shields.io/badge/ESP32-1e293b?style=flat-square&logo=espressif&logoColor=E7352C" alt="ESP32" /> <img src="https://img.shields.io/badge/Arduino-1e293b?style=flat-square&logo=arduino&logoColor=00979D" alt="Arduino" /> <img src="https://img.shields.io/badge/MQTT-1e293b?style=flat-square&logo=mqtt&logoColor=C084FC" alt="MQTT" />
+</td>
+<td width="33%" valign="top">
+<a href="https://github.com/Jostero32/ESP32-Control"><img src="https://raw.githubusercontent.com/Jostero32/ESP32-Control/main/docs/img/portada.png" width="100%" alt="ESP32-Control" /></a>
+<b><a href="https://github.com/Jostero32/ESP32-Control">ESP32-Control</a></b><br/>
+<sub>Firmware para ESP32 con cuatro botones que envían peticiones HTTP(S) a una API configurable, con portal cautivo para el…</sub><br/>
+<img src="https://img.shields.io/badge/ESP32-1e293b?style=flat-square&logo=espressif&logoColor=E7352C" alt="ESP32" /> <img src="https://img.shields.io/badge/C%2B%2B-1e293b?style=flat-square&logo=cplusplus&logoColor=00599C" alt="C++" /> <img src="https://img.shields.io/badge/Arduino-1e293b?style=flat-square&logo=arduino&logoColor=00979D" alt="Arduino" />
 </td>
 <td width="33%" valign="top">
 <a href="https://github.com/Jostero32/Piloto"><img src="https://raw.githubusercontent.com/Jostero32/Piloto/main/docs/img/portada.png" width="100%" alt="Piloto" /></a>
