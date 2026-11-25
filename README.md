@@ -237,3 +237,9 @@ También desarrollo firmware para ESP32 y Arduino, con las apps y backends que s
 <p align="center">
   <sub>¿Tienes un proyecto o una vacante? Escríbeme a <a href="mailto:carrascokevin756@gmail.com">carrascokevin756@gmail.com</a> o por <a href="https://www.linkedin.com/in/kevin-carrasco-360b8b451">LinkedIn</a>.</sub>
 </p>
+
+---
+
+## 📊 GitHub Statistics
+
+![Most Used Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Jostero32&layout=compact&theme=tokyonight&hide_border=true&locale=en)
