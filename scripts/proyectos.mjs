@@ -40,7 +40,8 @@ function tarjeta(repo, f) {
   const img = f.portada
     ? `<a href="${repo.html_url}"><img src="https://raw.githubusercontent.com/${USUARIO}/${repo.name}/${repo.default_branch}/${f.portada}" alt="${escapar(f.titulo)}" width="420" /></a><br/>`
     : '';
-  const stack = (f.stack ?? []).slice(0, 6).map((t) => `\`${escapar(t)}\``).join(' ');
+  // Dentro de HTML GitHub no procesa Markdown: las etiquetas van como <code>.
+  const stack = (f.stack ?? []).slice(0, 6).map((t) => `<code>${escapar(t)}</code>`).join(' ');
   const estado = f.estado ? `<br/><sub>${escapar(f.estado)}${f.anio ? ` · ${f.anio}` : ''}</sub>` : '';
   return `${img}<b><a href="${repo.html_url}">${escapar(f.titulo ?? repo.name)}</a></b><br/>${escapar(f.resumen)}<br/>${stack}${estado}`;
 }
