@@ -23,8 +23,10 @@ async function api(ruta) {
 
 async function leerFicha(repo) {
   for (const ruta of ['portfolio.json', 'docs/portfolio.json']) {
-    // El parámetro evita la caché de unos minutos de raw.githubusercontent.com.
-    const r = await fetch(`https://raw.githubusercontent.com/${USUARIO}/${repo.name}/${repo.default_branch}/${ruta}?t=${Date.now()}`);
+    // La API de contenidos devuelve siempre la versión actual (raw.githubusercontent.com cachea minutos).
+    const r = await fetch(`https://api.github.com/repos/${USUARIO}/${repo.name}/contents/${ruta}?ref=${repo.default_branch}`, {
+      headers: { ...headers, Accept: 'application/vnd.github.raw+json' },
+    });
     if (!r.ok) continue;
     try {
       return await r.json();
