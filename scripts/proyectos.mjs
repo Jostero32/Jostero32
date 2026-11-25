@@ -53,6 +53,8 @@ const LOGOS = {
   'BullMQ': ['redis', 'FF4438'], 'Android': ['android', '3DDC84'], 'ESP32': ['espressif', 'E7352C'],
   'ESP32-CAM': ['espressif', 'E7352C'], 'Arduino': ['arduino', '00979D'], 'Arduino Mega': ['arduino', '00979D'],
   'Bluetooth LE': ['bluetooth', '0082FC'], 'MQTT': ['mqtt', 'C084FC'], 'Mosquitto': ['eclipsemosquitto', 'C084FC'],
+  'ASP.NET Core': ['dotnet', '9B7BFF'], 'SQL Server': ['microsoftsqlserver', 'CC2927'], 'JWT': ['jsonwebtokens', 'FFFFFF'],
+  'Java 17': ['openjdk', 'F89820'], 'SonarQube': ['sonarqubeserver', '4E9BCD'], 'gRPC': ['google', '4DB6AC'],
 };
 
 function badge(tecnologia) {
@@ -98,10 +100,26 @@ function tarjetaCompacta(repo, f) {
   ].filter(Boolean).join('\n');
 }
 
+// Proyectos de compañeros en los que contribuí: se describen en colaboraciones.json de este repo.
+function tarjetaEquipo(c) {
+  const principal = Object.values(c.enlaces ?? {})[0];
+  const enlaces = Object.entries(c.enlaces ?? {}).map(([t, u]) => `<a href="${u}">${html(t)}</a>`).join(' · ');
+  return [
+    `<td width="33%" valign="top">`,
+    c.portada ? `<a href="${principal}"><img src="${c.portada}" width="100%" alt="${html(c.titulo)}" /></a>` : '',
+    `<h3><a href="${principal}">${html(c.titulo)}</a></h3>`,
+    `<p>${html(c.resumen)}</p>`,
+    `<p><b>Mi aporte:</b> ${html(c.aporte)}</p>`,
+    `<p>${(c.stack ?? []).map(badge).join(' ')}</p>`,
+    `<p>${enlaces}</p>`,
+    `</td>`,
+  ].filter(Boolean).join('\n');
+}
+
 function tabla(items, columnas, tarjeta) {
   const filas = [];
   for (let i = 0; i < items.length; i += columnas) {
-    const celdas = items.slice(i, i + columnas).map(({ repo, ficha }) => tarjeta(repo, ficha));
+    const celdas = items.slice(i, i + columnas).map((it) => (it.repo ? tarjeta(it.repo, it.ficha) : tarjeta(it)));
     filas.push(`<tr>\n${celdas.join('\n')}\n</tr>`);
   }
   return `<table>\n${filas.join('\n')}\n</table>`;
@@ -139,13 +157,22 @@ const esIot = ({ ficha }) => (ficha.categorias ?? []).some((c) => c === 'iot' ||
 const desarrollo = items.filter((i) => !esIot(i));
 const iot = items.filter(esIot);
 
+const destacados = desarrollo.filter((i) => i.ficha.destacado);
+const otros = desarrollo.filter((i) => !i.ficha.destacado);
+let seccionDesarrollo = tabla(destacados, 2, tarjetaGrande);
+if (otros.length) {
+  seccionDesarrollo += `\n\n<details>\n<summary><b>Más proyectos (${otros.length})</b></summary>\n<br/>\n\n${tabla(otros, 2, tarjetaGrande)}\n\n</details>`;
+}
+const equipo = JSON.parse(await readFile(new URL('../colaboraciones.json', import.meta.url), 'utf8'));
+
 const original = await readFile(README, 'utf8');
-let readme = reemplazar(original, 'PROYECTOS', tabla(desarrollo, 2, tarjetaGrande));
+let readme = reemplazar(original, 'PROYECTOS', seccionDesarrollo);
+readme = reemplazar(readme, 'EQUIPO', tabla(equipo, 3, tarjetaEquipo));
 readme = reemplazar(readme, 'IOT', tabla(iot, 3, tarjetaCompacta));
 
 if (readme !== original) {
   await writeFile(README, readme);
-  console.log(`README actualizado: ${desarrollo.length} de desarrollo, ${iot.length} de IoT.`);
+  console.log(`README actualizado: ${destacados.length} destacados, ${otros.length} más, ${equipo.length} en equipo, ${iot.length} de IoT.`);
 } else {
   console.log('Sin cambios.');
 }

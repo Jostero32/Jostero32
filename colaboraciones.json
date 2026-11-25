@@ -1,0 +1,38 @@
+[
+  {
+    "titulo": "Control de Combustible",
+    "resumen": "Gestión de flota vehicular con microservicios .NET 8 detrás de un API Gateway: choferes, vehículos, asignación de rutas y consumo de combustible.",
+    "aporte": "API Gateway, autenticación con JWT y los microservicios de choferes y consumo de combustible: 8 de los 14 PR aceptados.",
+    "stack": ["ASP.NET Core", "gRPC", "PostgreSQL", "Docker", "JWT", "React"],
+    "portada": "assets/equipo/control-combustible.png",
+    "anio": 2025,
+    "enlaces": {
+      "Backend": "https://github.com/W1llAn/ControlCombustibleBackend/tree/develop",
+      "Frontend": "https://github.com/W1llAn/ControlCombustibleFrontend"
+    }
+  },
+  {
+    "titulo": "Walk Seguros",
+    "resumen": "Gestión de seguros médicos con roles de administrador, agente y cliente: contratos, beneficios, pagos, reembolsos y reportes en PDF.",
+    "aporte": "Login y usuarios, contratos, beneficios y reportes en el backend, pruebas unitarias en el frontend y correcciones para SonarQube: 13 PR aceptados.",
+    "stack": ["Spring Boot", "Java 17", "PostgreSQL", "React", "JWT", "SonarQube"],
+    "portada": "assets/equipo/walk-seguros.png",
+    "anio": 2026,
+    "enlaces": {
+      "Backend": "https://github.com/IsmaelSailema20/GestionSegurosBackend",
+      "Frontend": "https://github.com/IsmaelSailema20/GestionSegurosFrontend",
+      "Demo": "https://gestion-seguros-frontend.vercel.app"
+    }
+  },
+  {
+    "titulo": "Gestión de Hospitales",
+    "resumen": "Administración de hospitales y centros médicos con un API Gateway que traduce REST a llamadas gRPC hacia los microservicios.",
+    "aporte": "Microservicios de autenticación y administración, y la comunicación gRPC con JWT: 4 de los 7 PR aceptados.",
+    "stack": ["ASP.NET Core", "gRPC", "SQL Server", "JWT"],
+    "portada": "assets/equipo/gestion-hospitales.png",
+    "anio": 2025,
+    "enlaces": {
+      "Backend": "https://github.com/W1llAn/GestionHospitalesBackend"
+    }
+  }
+]
