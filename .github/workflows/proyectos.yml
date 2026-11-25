@@ -1,0 +1,40 @@
+name: Actualizar proyectos del perfil
+
+on:
+  schedule:
+    - cron: "0 11 * * *"   # todos los días, 06:00 en Ecuador
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["scripts/**", ".github/workflows/proyectos.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: proyectos
+  cancel-in-progress: true
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Regenerar la sección de proyectos
+        run: node scripts/proyectos.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Guardar si hubo cambios
+        run: |
+          if git diff --quiet README.md; then
+            echo "Sin cambios en los proyectos."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Actualiza los proyectos destacados"
+          git push
