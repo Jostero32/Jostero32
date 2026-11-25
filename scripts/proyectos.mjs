@@ -1,31 +1,29 @@
-// Regenera la sección de proyectos del README a partir del portfolio.json de cada repo.
+// Regenera las secciones de proyectos del README a partir del portfolio.json de cada repo.
 //
-// Un repo entra si tiene la etiqueta (topic) "portfolio" y un portfolio.json en la raíz
-// o en docs/. Los destacados van primero; dentro de cada grupo, los más recientes.
+// Un repo entra si tiene la etiqueta (topic) "portfolio" y un portfolio.json en la raíz o en docs/.
+// - DESARROLLO: proyectos web, backend y full stack, en tarjetas grandes de dos columnas.
+// - IOT: proyectos con categoría "iot" o "embebidos", en tarjetas compactas de tres columnas.
+// Dentro de cada grupo: destacados primero, luego los más recientes.
 //
 // Uso:  node scripts/proyectos.mjs            (GITHUB_TOKEN opcional, evita límites de la API)
 import { readFile, writeFile } from 'node:fs/promises';
 
 const USUARIO = 'Jostero32';
 const README = new URL('../README.md', import.meta.url);
-const INICIO = '<!-- PROYECTOS:INICIO -->';
-const FIN = '<!-- PROYECTOS:FIN -->';
-const COLUMNAS = 2;
 
 const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'perfil-proyectos' };
 if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
-async function api(ruta) {
-  const r = await fetch(`https://api.github.com${ruta}`, { headers });
-  if (!r.ok) throw new Error(`${ruta}: HTTP ${r.status}`);
-  return r.json();
+async function api(ruta, extra = {}) {
+  const r = await fetch(`https://api.github.com${ruta}`, { headers: { ...headers, ...extra } });
+  return r;
 }
 
 async function leerFicha(repo) {
   for (const ruta of ['portfolio.json', 'docs/portfolio.json']) {
     // La API de contenidos devuelve siempre la versión actual (raw.githubusercontent.com cachea minutos).
-    const r = await fetch(`https://api.github.com/repos/${USUARIO}/${repo.name}/contents/${ruta}?ref=${repo.default_branch}`, {
-      headers: { ...headers, Accept: 'application/vnd.github.raw+json' },
+    const r = await api(`/repos/${USUARIO}/${repo.name}/contents/${ruta}?ref=${repo.default_branch}`, {
+      Accept: 'application/vnd.github.raw+json',
     });
     if (!r.ok) continue;
     try {
@@ -37,58 +35,117 @@ async function leerFicha(repo) {
   return null;
 }
 
-const escapar = (s = '') => String(s).replace(/\|/g, '\\|').replace(/\n/g, ' ');
+const html = (s = '') =>
+  String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function tarjeta(repo, f) {
-  const img = f.portada
-    ? `<a href="${repo.html_url}"><img src="https://raw.githubusercontent.com/${USUARIO}/${repo.name}/${repo.default_branch}/${f.portada}" alt="${escapar(f.titulo)}" width="420" /></a><br/>`
-    : '';
-  // Dentro de HTML GitHub no procesa Markdown: las etiquetas van como <code>.
-  const stack = (f.stack ?? []).slice(0, 6).map((t) => `<code>${escapar(t)}</code>`).join(' ');
-  const estado = f.estado ? `<br/><sub>${escapar(f.estado)}${f.anio ? ` · ${f.anio}` : ''}</sub>` : '';
-  return `${img}<b><a href="${repo.html_url}">${escapar(f.titulo ?? repo.name)}</a></b><br/>${escapar(f.resumen)}<br/>${stack}${estado}`;
+// Logo de Simple Icons y color para cada tecnología; las que no están salen sin logo.
+const LOGOS = {
+  'TypeScript': ['typescript', '3178C6'], 'JavaScript': ['javascript', 'F7DF1E'], 'Java': ['openjdk', 'F89820'],
+  'Java 21': ['openjdk', 'F89820'], 'Python': ['python', '3776AB'], 'C++': ['cplusplus', '00599C'],
+  'React': ['react', '61DAFB'], 'Angular': ['angular', 'DD0031'], 'Next.js': ['nextdotjs', 'FFFFFF'],
+  'Vite': ['vite', '646CFF'], 'Tailwind': ['tailwindcss', '38BDF8'], 'Express': ['express', 'FFFFFF'],
+  'Fastify': ['fastify', 'FFFFFF'], 'Spring Boot': ['springboot', '6DB33F'], 'Flask': ['flask', 'FFFFFF'],
+  'PostgreSQL': ['postgresql', '4169E1'], 'MongoDB': ['mongodb', '47A248'], 'SQLite': ['sqlite', '7FBCE6'],
+  'Redis': ['redis', 'FF4438'], 'MinIO': ['minio', 'C72E49'], 'Drizzle': ['drizzle', 'C5F74F'],
+  'TypeORM': ['typeorm', 'FE0803'], 'Sequelize': ['sequelize', '52B0E7'], 'Docker': ['docker', '2496ED'],
+  'nginx': ['nginx', '009639'], 'Firebase': ['firebase', 'FFCA28'], 'Render': ['render', 'FFFFFF'],
+  'WebSocket': ['socketdotio', 'FFFFFF'], 'TensorFlow.js': ['tensorflow', 'FF6F00'], 'TeX Live': ['latex', 'FFFFFF'],
+  'BullMQ': ['redis', 'FF4438'], 'Android': ['android', '3DDC84'], 'ESP32': ['espressif', 'E7352C'],
+  'ESP32-CAM': ['espressif', 'E7352C'], 'Arduino': ['arduino', '00979D'], 'Arduino Mega': ['arduino', '00979D'],
+  'Bluetooth LE': ['bluetooth', '0082FC'], 'MQTT': ['mqtt', 'C084FC'], 'Mosquitto': ['eclipsemosquitto', 'C084FC'],
+};
+
+function badge(tecnologia) {
+  const texto = tecnologia.replace(/\//g, ' · ');
+  const etiqueta = encodeURIComponent(texto.replace(/-/g, '--').replace(/_/g, '__').replace(/ /g, '_'));
+  const [logo, color] = LOGOS[tecnologia] ?? [];
+  const extra = logo ? `&logo=${logo}&logoColor=${color}` : '';
+  return `<img src="https://img.shields.io/badge/${etiqueta}-1e293b?style=flat-square${extra}" alt="${html(tecnologia)}" />`;
 }
 
-function tabla(items) {
+const portada = (repo, f) =>
+  f.portada ? `https://raw.githubusercontent.com/${USUARIO}/${repo.name}/${repo.default_branch}/${f.portada}` : null;
+
+// Primera oración del resumen, para las tarjetas compactas.
+function corto(texto = '', max = 120) {
+  const frase = texto.split(/(?<=[.:;])\s/)[0].replace(/[.:;]$/, '');
+  if (frase.length <= max) return `${frase}.`;
+  return `${frase.slice(0, frase.lastIndexOf(' ', max))}…`;
+}
+
+function tarjetaGrande(repo, f) {
+  const img = portada(repo, f);
+  return [
+    `<td width="50%" valign="top">`,
+    img ? `<a href="${repo.html_url}"><img src="${img}" width="100%" alt="${html(f.titulo)}" /></a>` : '',
+    `<h3><a href="${repo.html_url}">${html(f.titulo ?? repo.name)}</a></h3>`,
+    `<p>${html(f.resumen)}</p>`,
+    `<p>${(f.stack ?? []).slice(0, 7).map(badge).join(' ')}</p>`,
+    f.estado ? `<p><sub>${html(f.estado)}${f.anio ? ` · ${f.anio}` : ''}</sub></p>` : '',
+    `</td>`,
+  ].filter(Boolean).join('\n');
+}
+
+function tarjetaCompacta(repo, f) {
+  const img = portada(repo, f);
+  return [
+    `<td width="33%" valign="top">`,
+    img ? `<a href="${repo.html_url}"><img src="${img}" width="100%" alt="${html(f.titulo)}" /></a>` : '',
+    `<b><a href="${repo.html_url}">${html(f.titulo ?? repo.name)}</a></b><br/>`,
+    `<sub>${html(corto(f.resumen))}</sub><br/>`,
+    `${(f.stack ?? []).slice(0, 3).map(badge).join(' ')}`,
+    `</td>`,
+  ].filter(Boolean).join('\n');
+}
+
+function tabla(items, columnas, tarjeta) {
   const filas = [];
-  for (let i = 0; i < items.length; i += COLUMNAS) {
-    const celdas = items.slice(i, i + COLUMNAS).map(({ repo, ficha }) => `<td width="50%" valign="top">${tarjeta(repo, ficha)}</td>`);
-    while (celdas.length < COLUMNAS) celdas.push('<td width="50%"></td>');
-    filas.push(`<tr>${celdas.join('')}</tr>`);
+  for (let i = 0; i < items.length; i += columnas) {
+    const celdas = items.slice(i, i + columnas).map(({ repo, ficha }) => tarjeta(repo, ficha));
+    filas.push(`<tr>\n${celdas.join('\n')}\n</tr>`);
   }
   return `<table>\n${filas.join('\n')}\n</table>`;
 }
 
-const busqueda = await api(`/search/repositories?q=user:${USUARIO}+topic:portfolio+fork:false&per_page=100`);
+function reemplazar(readme, nombre, contenido) {
+  const inicio = `<!-- ${nombre}:INICIO -->`;
+  const fin = `<!-- ${nombre}:FIN -->`;
+  const a = readme.indexOf(inicio);
+  const b = readme.indexOf(fin);
+  if (a < 0 || b < a) throw new Error(`Faltan los marcadores ${nombre} en README.md`);
+  return `${readme.slice(0, a + inicio.length)}\n${contenido}\n${readme.slice(b)}`;
+}
+
+const busqueda = await (await api(`/search/repositories?q=user:${USUARIO}+topic:portfolio+fork:false&per_page=100`)).json();
 const items = [];
-for (const repo of busqueda.items) {
+for (const repo of busqueda.items ?? []) {
   if (repo.private || repo.archived) continue;
   const ficha = await leerFicha(repo);
   if (ficha) items.push({ repo, ficha });
   else console.warn(`sin portfolio.json: ${repo.name}`);
 }
+if (!items.length) throw new Error('No se encontró ningún proyecto; se deja el README como está.');
+
+// "orden" (opcional) fija la posición; sin él: destacados primero y luego los más recientes.
+const orden = (f) => (Number.isFinite(f.orden) ? f.orden : Infinity);
 items.sort((a, b) =>
+  (orden(a.ficha) - orden(b.ficha) || 0) ||
   Number(Boolean(b.ficha.destacado)) - Number(Boolean(a.ficha.destacado)) ||
   (b.ficha.anio ?? 0) - (a.ficha.anio ?? 0) ||
   new Date(b.repo.pushed_at) - new Date(a.repo.pushed_at),
 );
 
-const destacados = items.filter((i) => i.ficha.destacado);
-const otros = items.filter((i) => !i.ficha.destacado);
-let seccion = tabla(destacados);
-if (otros.length) {
-  seccion += `\n\n<details>\n<summary><b>Más proyectos (${otros.length})</b></summary>\n<br/>\n\n${tabla(otros)}\n\n</details>`;
-}
-seccion += `\n\n<sub>Sección generada automáticamente a partir del <code>portfolio.json</code> de cada repositorio · ${items.length} proyectos.</sub>`;
+const esIot = ({ ficha }) => (ficha.categorias ?? []).some((c) => c === 'iot' || c === 'embebidos');
+const desarrollo = items.filter((i) => !esIot(i));
+const iot = items.filter(esIot);
 
-const readme = await readFile(README, 'utf8');
-const a = readme.indexOf(INICIO);
-const b = readme.indexOf(FIN);
-if (a < 0 || b < a) throw new Error('No se encontraron los marcadores de la sección de proyectos en README.md');
-const nuevo = `${readme.slice(0, a + INICIO.length)}\n${seccion}\n${readme.slice(b)}`;
-if (nuevo !== readme) {
-  await writeFile(README, nuevo);
-  console.log(`README actualizado: ${destacados.length} destacados, ${otros.length} más.`);
+const original = await readFile(README, 'utf8');
+let readme = reemplazar(original, 'PROYECTOS', tabla(desarrollo, 2, tarjetaGrande));
+readme = reemplazar(readme, 'IOT', tabla(iot, 3, tarjetaCompacta));
+
+if (readme !== original) {
+  await writeFile(README, readme);
+  console.log(`README actualizado: ${desarrollo.length} de desarrollo, ${iot.length} de IoT.`);
 } else {
   console.log('Sin cambios.');
 }

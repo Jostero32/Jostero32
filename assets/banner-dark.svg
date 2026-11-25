@@ -1,63 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" width="1280" height="320" font-family="Segoe UI, Inter, Roboto, Helvetica, Arial, sans-serif">
-  <title>Kevin Carrasco · del pin GPIO al contenedor</title>
+  <title>Kevin Carrasco · Desarrollador Full Stack</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#131c38"/>
+      <stop offset="0" stop-color="#0a0f1c"/><stop offset="1" stop-color="#111a30"/>
     </linearGradient>
-    <pattern id="puntos" width="24" height="24" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.3" fill="#1e2a4a"/>
-    </pattern>
-    <linearGradient id="traza" x1="0" x2="1">
-      <stop offset="0" stop-color="#fbbf24"/><stop offset="0.5" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/>
+    <radialGradient id="glow" cx="0.78" cy="0.5" r="0.45">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.22"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="subrayado" x1="0" x2="1">
+      <stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#c084fc"/>
     </linearGradient>
   </defs>
 
   <rect width="1280" height="320" rx="18" fill="url(#bg)"/>
-  <rect width="1280" height="320" rx="18" fill="url(#puntos)"/>
+  <rect width="1280" height="320" rx="18" fill="url(#glow)"/>
 
-  <!-- Texto -->
-  <text x="64" y="98" font-size="15" font-weight="700" letter-spacing="3" fill="#22d3ee">AMBATO · ECUADOR</text>
-  <text x="62" y="160" font-size="56" font-weight="800" fill="#f1f5f9">Kevin Carrasco</text>
-  <text x="64" y="202" font-size="22" font-weight="600" fill="#94a3b8">Desarrollador de software · IoT · Full stack</text>
-  <text x="64" y="252" font-size="18" fill="#f1f5f9">Del <tspan font-family="Consolas, Menlo, monospace" fill="#fbbf24">pin GPIO</tspan> al <tspan font-family="Consolas, Menlo, monospace" fill="#a78bfa">contenedor</tspan>: firmware, protocolos, APIs y despliegue.</text>
+  <text x="64" y="104" font-size="15" font-weight="700" letter-spacing="3" fill="#60a5fa">HOLA, SOY</text>
+  <text x="62" y="166" font-size="60" font-weight="800" fill="#f1f5f9">Kevin Carrasco</text>
+  <rect x="64" y="184" width="120" height="5" rx="2.5" fill="url(#subrayado)"/>
+  <text x="64" y="226" font-size="24" font-weight="600" fill="#f1f5f9">Desarrollador Full Stack</text>
+  <text x="64" y="258" font-size="18" fill="#94a3b8">APIs, aplicaciones web y despliegue con Docker · Ambato, Ecuador</text>
 
-  <!-- Ilustración: chip → protocolos → API → contenedores -->
-  <g transform="translate(760,70)">
-    <!-- Chip -->
-    <rect x="0" y="58" width="96" height="96" rx="10" fill="#18233f" stroke="#fbbf24" stroke-width="2.5"/>
-    <rect x="22" y="80" width="52" height="52" rx="6" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.7"/>
-    <text x="48" y="111" text-anchor="middle" font-size="13" font-weight="700" fill="#fbbf24" font-family="Consolas, Menlo, monospace">ESP32</text>
-    <g stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
-      <path d="M18 58 v-12 M38 58 v-12 M58 58 v-12 M78 58 v-12 M18 154 v12 M38 154 v12 M58 154 v12 M78 154 v12"/>
+  <g>
+    <rect x="700" y="56" width="540" height="222" rx="12" fill="#0d1424" stroke="#24324f"/>
+    <path d="M700 68 a12 12 0 0 1 12 -12 h516 a12 12 0 0 1 12 12 v22 h-540 z" fill="#16203a"/>
+    <circle cx="720" cy="73" r="5.5" fill="#f87171"/>
+    <circle cx="738" cy="73" r="5.5" fill="#fbbf24"/>
+    <circle cx="756" cy="73" r="5.5" fill="#34d399"/>
+    <text x="970" y="78" text-anchor="middle" font-size="12" fill="#94a3b8">sobre-mi.ts</text>
+    <g font-family="Cascadia Code, Consolas, Menlo, monospace">
+    <text x="722" y="118" font-size="11" fill="#475569" text-anchor="end">1</text>
+    <text x="734" y="118" font-size="14" xml:space="preserve"><tspan fill="#64748b">// abierto a prácticas y empleo</tspan></text>
+    <text x="722" y="139" font-size="11" fill="#475569" text-anchor="end">2</text>
+    <text x="734" y="139" font-size="14" xml:space="preserve"><tspan fill="#c084fc">const </tspan><tspan fill="#7dd3fc">kevin</tspan><tspan fill="#cbd5e1"> = {</tspan></text>
+    <text x="722" y="160" font-size="11" fill="#475569" text-anchor="end">3</text>
+    <text x="734" y="160" font-size="14" xml:space="preserve"><tspan fill="#7dd3fc">  rol</tspan><tspan fill="#cbd5e1">: </tspan><tspan fill="#86efac">"Full Stack Developer"</tspan><tspan fill="#cbd5e1">,</tspan></text>
+    <text x="722" y="181" font-size="11" fill="#475569" text-anchor="end">4</text>
+    <text x="734" y="181" font-size="14" xml:space="preserve"><tspan fill="#7dd3fc">  frontend</tspan><tspan fill="#cbd5e1">: [</tspan><tspan fill="#86efac">"React"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"Angular"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"Next.js"</tspan><tspan fill="#cbd5e1">],</tspan></text>
+    <text x="722" y="202" font-size="11" fill="#475569" text-anchor="end">5</text>
+    <text x="734" y="202" font-size="14" xml:space="preserve"><tspan fill="#7dd3fc">  backend</tspan><tspan fill="#cbd5e1">: [</tspan><tspan fill="#86efac">"Spring Boot"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"Express"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"ASP.NET"</tspan><tspan fill="#cbd5e1">],</tspan></text>
+    <text x="722" y="223" font-size="11" fill="#475569" text-anchor="end">6</text>
+    <text x="734" y="223" font-size="14" xml:space="preserve"><tspan fill="#7dd3fc">  datos</tspan><tspan fill="#cbd5e1">: [</tspan><tspan fill="#86efac">"PostgreSQL"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"MongoDB"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"Redis"</tspan><tspan fill="#cbd5e1">],</tspan></text>
+    <text x="722" y="244" font-size="11" fill="#475569" text-anchor="end">7</text>
+    <text x="734" y="244" font-size="14" xml:space="preserve"><tspan fill="#7dd3fc">  despliegue</tspan><tspan fill="#cbd5e1">: [</tspan><tspan fill="#86efac">"Docker"</tspan><tspan fill="#cbd5e1">, </tspan><tspan fill="#86efac">"nginx"</tspan><tspan fill="#cbd5e1">],</tspan></text>
+    <text x="722" y="265" font-size="11" fill="#475569" text-anchor="end">8</text>
+    <text x="734" y="265" font-size="14" xml:space="preserve"><tspan fill="#cbd5e1">};</tspan></text>
     </g>
-
-    <!-- Traza -->
-    <path d="M96 106 H150 C170 106 170 60 190 60 H226 M190 60 C210 60 210 106 230 106 M150 106 C170 106 170 152 190 152 H226" fill="none" stroke="url(#traza)" stroke-width="3" stroke-linecap="round"/>
-    <g font-size="11" font-weight="700" font-family="Consolas, Menlo, monospace">
-      <rect x="168" y="46" width="58" height="28" rx="14" fill="#18233f" stroke="#2b3a63"/><text x="197" y="64" text-anchor="middle" fill="#22d3ee">BLE</text>
-      <rect x="168" y="92" width="58" height="28" rx="14" fill="#18233f" stroke="#2b3a63"/><text x="197" y="110" text-anchor="middle" fill="#22d3ee">MQTT</text>
-      <rect x="168" y="138" width="58" height="28" rx="14" fill="#18233f" stroke="#2b3a63"/><text x="197" y="156" text-anchor="middle" fill="#22d3ee">UDP</text>
-    </g>
-    <path d="M226 60 H262 C276 60 276 106 290 106 M226 152 H262 C276 152 276 106 290 106 M226 106 H290" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
-
-    <!-- API -->
-    <rect x="290" y="78" width="84" height="56" rx="10" fill="#18233f" stroke="#22d3ee" stroke-width="2.5"/>
-    <text x="332" y="104" text-anchor="middle" font-size="14" font-weight="800" fill="#22d3ee">API</text>
-    <text x="332" y="122" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Consolas, Menlo, monospace">REST · WS</text>
-    <path d="M374 106 H408" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
-
-    <!-- Contenedores -->
-    <g fill="#18233f" stroke="#a78bfa" stroke-width="2.5">
-      <rect x="408" y="44" width="76" height="40" rx="8"/>
-      <rect x="408" y="88" width="76" height="40" rx="8"/>
-      <rect x="408" y="132" width="76" height="40" rx="8"/>
-    </g>
-    <g fill="#a78bfa">
-      <circle cx="424" cy="64" r="4"/><circle cx="424" cy="108" r="4"/><circle cx="424" cy="152" r="4"/>
-    </g>
-    <g font-size="11" font-family="Consolas, Menlo, monospace" fill="#94a3b8">
-      <text x="436" y="68">web</text><text x="436" y="112">api</text><text x="436" y="156">db</text>
-    </g>
-    <circle cx="474" cy="64" r="4" fill="#34d399"/><circle cx="474" cy="108" r="4" fill="#34d399"/><circle cx="474" cy="152" r="4" fill="#34d399"/>
   </g>
 </svg>
