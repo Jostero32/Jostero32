@@ -1,7 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg" />
-  <img alt="Kevin Carrasco · Desarrollador Full Stack" src="assets/banner-dark.svg" width="100%" />
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cabecera-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/cabecera-light.svg" />
+  <img alt="Kevin Carrasco · Desarrollador Full Stack" src="assets/cabecera-dark.svg" width="100%" />
 </picture>
 
 <p align="center">

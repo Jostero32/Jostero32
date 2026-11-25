@@ -1,4 +1,4 @@
-// Genera assets/banner-dark.svg y assets/banner-light.svg desde una sola plantilla.
+// Genera assets/cabecera-dark.svg y assets/cabecera-light.svg desde una sola plantilla.
 // Uso: node scripts/banner.mjs
 import { mkdir, writeFile } from 'node:fs/promises';
 
@@ -76,6 +76,6 @@ const svg = (p) => {
 
 await mkdir(new URL('../assets/', import.meta.url), { recursive: true });
 for (const [nombre, p] of Object.entries(paletas)) {
-  await writeFile(new URL(`../assets/banner-${nombre}.svg`, import.meta.url), svg(p));
+  await writeFile(new URL(`../assets/cabecera-${nombre}.svg`, import.meta.url), svg(p));
 }
 console.log('banners generados');
